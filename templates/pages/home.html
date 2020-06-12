@@ -6,4 +6,20 @@ Amazing!
 
 {% block content %}
 Welcome to Tweetme 2!
+<script>
+    const xhr = new XMLHttpRequest()
+    const method = "GET" //'POST'
+    const url = "tweets"
+    responseType = "json"
+
+    xhr.responseType = responseType
+    xhr.open(method, url)
+    xhr.onload = function() {
+        const serverResponse = xhr.response
+        var listedItems = serverResponse.response
+        console.log(listedItems)
+    }
+    xhr.send()
+
+</script>
 {% endblock content %}
