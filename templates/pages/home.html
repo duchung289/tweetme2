@@ -12,10 +12,21 @@ Amazing!
     </div>
 </div>
 
+<div class="row mb-3">
+    <div class="col-md-4 mx-auto col-10">
+        <form class="form" method="POST" action="create-tweet">
+            {% csrf_token %}
+            <input type="hidden" value="/" name="next">
+            <textarea class="form-control" name="content" placeholder="Your tweet ..."></textarea>
+            <button type="submit" class="btn btn-primary">Tweet</button>
+        </form>
+    </div>
+</div>
 
 <div class="row" id="tweets">
     <h1>Loading...</h1>
 </div>
+
 <script>
     const tweetsElement = document.getElementById('tweets') //getting an html element
 <!--    tweetsElement.innerHTML = "Loading..." //setting new html in that element-->
@@ -23,7 +34,6 @@ Amazing!
 <!--    var el2 = "<h1>Hi there 2</h1>"-->
 <!--    var el3 = "<h1>Hi there 3</h1>"-->
 <!--    tweetsElement.innerHTML = el1 + el2 + el3-->
-
 
     const xhr = new XMLHttpRequest()
     const method = "GET" //'POST'
