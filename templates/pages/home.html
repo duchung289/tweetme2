@@ -49,11 +49,17 @@ Amazing!
                 const ogHtml = tweetsContainerEl.innerHTML
                 tweetsContainerEl.innerHTML = newTweetEl + ogHtml
                 myForm.reset() // Auto reset
+            } else if (xhr.status === 400){
+                const errorJson = xhr.response
+                console.log(errorJson)                
             }
             // const tweetsEl = document.getElementById('tweets')
-            // loadTweets(tweetsEl)
-            
+            // loadTweets(tweetsEl)            
         }
+        xhr.onerror = function() {
+            alert("an error occurs! Please try agian later !")
+        }
+
         xhr.send(myFormData)
         // console.log(endpoint, method)
     }
