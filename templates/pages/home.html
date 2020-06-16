@@ -77,9 +77,13 @@ Amazing!
                 } else {
                     alert("An error occurs! Please try again later !") 
                 }
-            } else if (xhr.status === 500) {
-                alert("There was an error! Please try again later !")
-            }         
+            } else if (xhr.status === 401) {
+                alert("You must login!")
+                window.location.href = "/login"
+            }
+            else if (xhr.status === 500) {
+                alert("You must login!!")
+            }       
         }
         xhr.onerror = function() {
             alert("An error occurs! Please try again later !(on error)")
