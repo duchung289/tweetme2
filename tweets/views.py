@@ -13,14 +13,12 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 # Create your views here.
 
 def home_view(request,*args, **kwargs):
-    # return HttpResponse('<h1>Hello World!</h1>')
+    print(request.user)
     return render(request,'pages/home.html', context={}, status=200)
 
 def tweet_create_view(request, *args, **kwargs):
-    # print("Ajax:", request.is_ajax())
     form = TweetForm(request.POST or None)
     next_url = request.POST.get('next') or None
-    # print('Next url is:', next_url)
     if form.is_valid():
         obj = form.save(commit=False)
         # will do other form related logic
