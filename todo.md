@@ -4,6 +4,8 @@
         -> Image -> Media Storage Server
     -> Delete
     -> Retweeting
+        --> read only serializer
+        --> create only serializer
     -> Linking
 
 2. Users
