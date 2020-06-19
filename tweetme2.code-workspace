@@ -6,6 +6,6 @@
 	],
 	"settings": {
 		"git.ignoreLimitWarning": true,
-		"python.pythonPath": "/Users/administrator/anaconda3/envs/myfirstenv/bin/python"
+		"python.pythonPath": "/Users/administrator/.local/share/virtualenvs/tweetme2-foJDVdsf/bin/python"
 	}
 }
