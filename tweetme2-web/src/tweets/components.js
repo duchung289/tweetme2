@@ -5,22 +5,30 @@ import {loadTweets} from '../lookup'
 
 export function TweetsComponent(props) {
     const textAreaRef = React.createRef()
+    const [newTweets, setNewTweets] = useState([])
     const handleSubmit = (event) => {
         event.preventDefault()
         const newValue=textAreaRef.current.value
-        console.log(newValue)
+        const tempNewTweets = [...newTweets]
+        // change this to server call
+        tempNewTweets.unshift({
+            content: newValue,
+            likes: 0,
+            id: 134453
+        })
+        setNewTweets(tempNewTweets)
         textAreaRef.current.value = ''
     }
     return <div className={props.className}>
         <div className='col-12 mb-3'>
             <form onSubmit={handleSubmit}>        
-                <textarea ref={textAreaRef} required='true' className='form-control' name = 'tweet'>
+                <textarea ref={textAreaRef} required={true} className='form-control' name = 'tweet'>
 
                 </textarea>
                 <button type='submit' className='btn btn-primary my-3'>Tweet</button>
             </form>
         </div>
-        <TweetList/>
+        <TweetList newTweets={newTweets}/>
     </div>
     
 }
@@ -63,19 +71,26 @@ export  function Tweet(props) {
 }
   
 export function TweetList(props) {
+    const [tweetsInit, setTweetsInit] = useState([])
     const [tweets, setTweets] = useState([])
-  
+    useEffect(() => {
+        let final = [...props.newTweets].concat(tweetsInit)
+        if (final.length !== tweets.length){
+            setTweets(final)
+        }
+    },[props.newTweets, tweets, tweetsInit])
+
     useEffect(() => {
       const myCallback = (response, status) => {
         if (status ===200) {
-          setTweets(response)
+            setTweetsInit(response)
         } else {
-          alert('There was an error!')
+            alert('There was an error!')
         }
       }
       loadTweets(myCallback)
-    }, [])
+    }, [tweetsInit])
     return tweets.map((item, index)=>{
-      return <Tweet tweet={item} key={index} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
+      return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
     })
 }
