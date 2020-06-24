@@ -14,9 +14,9 @@ export function TweetsComponent(props) {
         createTweet(newValue,(response,status) => {
             if (status ===201) {
                 tempNewTweets.unshift(response)
-            }else {
+            } else {
                 console.log(response)
-                alert('There was an error. Please try again')
+                alert('An error occured. Please try again!')
             }
         })
         
@@ -35,6 +35,37 @@ export function TweetsComponent(props) {
         <TweetList newTweets={newTweets}/>
     </div>
     
+}
+
+  
+export function TweetList(props) {
+    const [tweetsInit, setTweetsInit] = useState([])
+    const [tweets, setTweets] = useState([])
+    const [tweetsDidSet, setTweetsDidSet] = useState(false)
+    useEffect(() => {
+        const final = [...props.newTweets].concat(tweetsInit)
+        if (final.length !== tweets.length){
+            setTweets(final)
+        }
+    },[props.newTweets, tweets, tweetsInit])
+
+    useEffect(() => {
+        if (tweetsDidSet === false) {
+            const myCallback = (response, status) => {
+                if (status === 200) {
+                    setTweetsInit(response)
+                    setTweetsDidSet(true)
+                } else {
+                    alert('There was an error!')
+                }
+            }
+            loadTweets(myCallback)
+        }
+    }, [tweetsInit, tweetsDidSet, setTweetsDidSet])
+    
+    return tweets.map((item, index)=>{
+      return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
+    })
 }
 
 export function ActionBtn(props) {
@@ -72,33 +103,4 @@ export  function Tweet(props) {
         <ActionBtn tweet={tweet} action={{type:'retweet', display:'ReTweet'}}/>
       </div>
     </div>
-}
-  
-export function TweetList(props) {
-    const [tweetsInit, setTweetsInit] = useState([])
-    const [tweets, setTweets] = useState([])
-    const [tweetsDidSet, setTweetsDidSet] = useState(false)
-    useEffect(() => {
-        let final = [...props.newTweets].concat(tweetsInit)
-        if (final.length !== tweets.length){
-            setTweets(final)
-        }
-    },[props.newTweets, tweets, tweetsInit])
-
-    useEffect(() => {
-        if (tweetsDidSet === false) {
-            const myCallback = (response, status) => {
-                if (status ===200) {
-                    setTweetsInit(response)
-                    setTweetsDidSet(true)
-                } else {
-                    alert('There was an error!')
-                }
-            }
-            loadTweets(myCallback)
-        }
-    }, [tweetsInit, tweetsDidSet, setTweetsDidSet])
-    return tweets.map((item, index)=>{
-      return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
-    })
 }

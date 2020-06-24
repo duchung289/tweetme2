@@ -20,31 +20,32 @@ function lookup(method, endpoint, callback, data){
     jsonData = JSON.stringify(data)
   }
   const xhr = new XMLHttpRequest()
-  const url = `http://localhost:8000/api${endpoint}/`
+  const url = `http://localhost:8000/api${endpoint}`
   xhr.responseType = "json"
   const csrftoken = getCookie('csrftoken')
   xhr.open(method, url)
   xhr.setRequestHeader("Content-Type", "application/json")
   
   if (csrftoken) {
-    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
+//    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
     xhr.setRequestHeader("X-Requested-With","XMLHttpRequest")
-    xhr.setRequestHeader("X-CSRFToken", csrftoken)}
+    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+  }
   xhr.onload = function() {
     callback(xhr.response, xhr.status) 
   }
   xhr.onerror = function(e) {
     console.log(e)
-    callback({'message':'There is an error'}, 400)
+    callback({'message':'There is an error!!!'}, 400)
   }
   xhr.send(jsonData)
 
 }
 
 export function createTweet(newTweet, callback) {
-  lookup("POST", "/tweets/create", callback, {content: newTweet})
+  lookup("POST", "/tweets/create/", callback, {content: newTweet})
 }
 
 export function loadTweets(callback) {
-  lookup("GET", "/tweets", callback)  
+  lookup("GET", "/tweets/", callback)  
 }
