@@ -39,7 +39,6 @@ function lookup(method, endpoint, callback, data){
     callback({'message':'There is an error!!!'}, 400)
   }
   xhr.send(jsonData)
-
 }
 
 export function createTweet(newTweet, callback) {

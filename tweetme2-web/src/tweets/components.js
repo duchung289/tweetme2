@@ -6,21 +6,21 @@ import {loadTweets, createTweet} from '../lookup'
 export function TweetsComponent(props) {
     const textAreaRef = React.createRef()
     const [newTweets, setNewTweets] = useState([])
+    const handleBackendUpdate = (response, status) => {
+        // Backend api response handler
+        let tempNewTweets = [...newTweets]
+        if (status ===201) {
+            tempNewTweets.unshift(response)
+            setNewTweets(tempNewTweets)
+        } else {
+            alert('An error occured. Please try again!')
+        }
+    }
     const handleSubmit = (event) => {
         event.preventDefault()
         const newValue=textAreaRef.current.value
-        const tempNewTweets = [...newTweets]
-        // change this to server call
-        createTweet(newValue,(response,status) => {
-            if (status ===201) {
-                tempNewTweets.unshift(response)
-            } else {
-                console.log(response)
-                alert('An error occured. Please try again!')
-            }
-        })
-        
-        setNewTweets(tempNewTweets)
+        // Backend api request
+        createTweet(newValue,handleBackendUpdate)        
         textAreaRef.current.value = ''
     }
     return <div className={props.className}>
