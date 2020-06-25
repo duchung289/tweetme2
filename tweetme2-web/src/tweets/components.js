@@ -7,6 +7,7 @@ import {
 
 
 export function TweetsComponent(props) {
+    console.log(props)
     const textAreaRef = React.createRef()
     const [newTweets, setNewTweets] = useState([])
     const handleBackendUpdate = (response, status) => {
