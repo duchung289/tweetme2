@@ -12,7 +12,7 @@ class TweetLike(models.Model):
 
 class TweetQuerySet(models.QuerySet):
     def by_username(self, username):
-        return self.filter(user__username_iexact=username)
+        return self.filter(user__username__iexact=username)
 
     def feed(self, user):
         profiles_exist = user.following.exists()
