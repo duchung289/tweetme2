@@ -18,17 +18,17 @@ class TweetQuerySet(models.QuerySet):
         profiles_exist = user.following.exists()
         follow_users_id = []
         if profiles_exist:
-            follow_users_id = user.following.value_list("user__id", flat = True)    
+            follow_users_id = user.following.values_list("user__id", flat = True)    
         qs = Tweet.objects.filter(
             Q(user__id__in=follow_users_id)|
             Q(user=user)
-        ).distinc().order_by("-timestamp")
+        ).distinct().order_by("-timestamp")
 
 class TweetManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
         return TweetQuerySet(self.model, using=self._db)
     def feed(self,user):
-        return self.get_queryset().feed(user)
+        return self.get_queryset()
 
 
 class Tweet(models.Model):
@@ -43,8 +43,8 @@ class Tweet(models.Model):
 
     objects = TweetManager()
 
-    # def __str__(self):
-    #     return self.content
+    def __str__(self):
+        return self.content
 
     class Meta:
         ordering = ['-id']

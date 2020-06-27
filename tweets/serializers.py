@@ -47,10 +47,10 @@ class TweetSerializer(serializers.ModelSerializer):
         return obj.likes.count()
 
     def get_content(self, obj):
-            content = obj.content
-            if obj.is_retweet:
-                content = obj.parent.content
-            return content
+        content = obj.content
+        if obj.is_retweet:
+            content = obj.parent.content
+        return content
     
 
 
