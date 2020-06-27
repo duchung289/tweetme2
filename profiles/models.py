@@ -19,7 +19,7 @@ class Profile(models.Model):
     '''
     profile_obj = Profile.object.first()
     profile_obj.follower.all() --> All users who are following this profile
-    user.following.all() --> All users that I follow
+    user.following.all() --> All user profiles that I follow
     '''
 
 def user_did_save(sender, instance, created, *args, **kwargs):
