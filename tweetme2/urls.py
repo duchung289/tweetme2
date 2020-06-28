@@ -27,13 +27,15 @@ from accounts.views import (
 )
 
 from tweets.views import (
+    home_view,
     tweets_list_view,
     tweets_detail_view,    
 )
 
 urlpatterns = [
+    path('', home_view),
     path('admin/', admin.site.urls),
-    path('', tweets_list_view),
+    path('global/', tweets_list_view),
     path('<int:tweet_id>', tweets_detail_view),
     re_path(r'profiles?/', include('profiles.urls')),
     re_path(r'api/profiles?/', include('profiles.api.urls')),
