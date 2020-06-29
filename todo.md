@@ -25,7 +25,8 @@
 -------
 
 Long-term to do:
+- Large file uploads for images --> Dive into AWS
 - Notification
-- DM (Direct Messages)
-- Explore tag  -> Finding hashtags
+- DM (Direct Messages) / Private inbox ~ Chat x Channels
+- Explore tag  -> Finding hashtags -> parse and filter for hashtag
         
